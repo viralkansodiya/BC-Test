@@ -14,7 +14,7 @@ app_license = "MIT"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/bc_test/css/bc_test.css"
-# web_include_js = "/assets/bc_test/js/bc_test.js"
+web_include_js = "bc.bundle.js"
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "bc_test/public/scss/website"
