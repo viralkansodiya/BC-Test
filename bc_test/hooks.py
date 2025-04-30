@@ -153,9 +153,9 @@ web_include_js = "bc.bundle.js"
 # Overriding Methods
 # ------------------------------
 #
-# override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "bc_test.event.get_events"
-# }
+override_whitelisted_methods = {
+	"webshop.webshop.api.get_product_filter_data": "bc_test.bc_test.api.get_product_filter_data"
+}
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
