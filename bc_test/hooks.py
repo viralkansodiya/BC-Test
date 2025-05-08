@@ -154,7 +154,8 @@ web_include_js = "bc.bundle.js"
 # ------------------------------
 #
 override_whitelisted_methods = {
-	"webshop.webshop.api.get_product_filter_data": "bc_test.bc_test.api.get_product_filter_data"
+	"webshop.webshop.api.get_product_filter_data": "bc_test.bc_test.api.get_product_filter_data",
+	"lms.lms.user.sign_up" : "bc_test.bc_test.user.sign_up"
 }
 #
 # each overriding function accepts a `data` argument;
