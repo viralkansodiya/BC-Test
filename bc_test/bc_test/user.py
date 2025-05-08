@@ -59,5 +59,5 @@ def sign_up(email, full_name, verify_terms, user_category):
 		return 2, _("Please ask your administrator to verify your sign-up")
 
 
-def after_insert(self, methods)
+def after_insert(self, methods):
 	self.remove_roles("LMS Student")
