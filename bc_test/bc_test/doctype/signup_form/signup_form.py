@@ -17,6 +17,6 @@ class SignupForm(Document):
 			doc_user.send_welcome_email = 1
 			doc_user.flags.ignore_permissions = True
 			doc_user.append("roles",{
-				"role" : "LMS Student"
+				"role" : "Customer",
 			})
 			doc_user.insert()
