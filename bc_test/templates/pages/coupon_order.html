@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order Confirmation</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f8fb;
+      color: #333;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+    }
+    .success-icon {
+      text-align: center;
+      font-size: 48px;
+      color: #27ae60;
+    }
+    .order-details {
+      margin: 20px 0;
+      font-size: 16px;
+    }
+    .highlight {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+    .info-box {
+      background-color: #eaf9ff;
+      padding: 15px;
+      border-left: 4px solid #007bff;
+      margin: 20px 0;
+      border-radius: 6px;
+    }
+    .support {
+      font-size: 14px;
+      text-align: center;
+      color: #777;
+      margin-top: 20px;
+    }
+    .support a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .support a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="success-icon">✅</div>
+    <h1>Order Confirmed</h1>
+    
+    <div class="order-details">
+      <p><span class="highlight">Order ID:</span> {{ doc.name }}</p>
+      <p><span class="highlight">Description:</span> You have successfully placed your order.</p>
+      <ul>
+        {% for row in doc.items %}
+        <li>{{ row.item_name }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="info-box">
+      <p><strong>Within 10 to 30 minutes</strong>, we will send you the course details and access link to your <strong>registered email address</strong>.</p>
+      <p>Please check your inbox and spam folder.</p>
+    </div>
+
+    <div class="support">
+      <p>If you don’t receive the email within 30 minutes, please contact us at <a href="mailto:support@yourdomain.com">support@yourdomain.com</a>.</p>
+    </div>
+  </div>
+</body>
+</html>
