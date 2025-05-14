@@ -64,6 +64,8 @@ def place_order():
 	sales_order.flags.ignore_permissions = True
 	sales_order.insert()
 	sales_order.submit()
+	if coupon_code:
+		create_enrollement_for_all_cource(sales_order)
 
 	if hasattr(frappe.local, "cookie_manager"):
 		frappe.local.cookie_manager.delete_cookie("cart_count")
@@ -74,4 +76,20 @@ def place_order():
 
 
 def create_enrollement_for_all_cource(sales_order):
-	course_list = frappe.db.get_list("")
+	course_list = frappe.db.get_list("LMS Course", pluck="name")
+	for row in course_list:
+		if not frappe.db.exists("LMS Enrollment", {"member":sales_order.owner, "course" : row}):
+			new_enroll = frappe.new_doc("LMS Enrollment")
+			new_enroll.member = sales_order.owner
+			new_enroll.course = row
+			new_enroll.insert()
+
+	subject="Your Course is Ready – Access Your Learning Now!"
+	message = "<p>Hi {0}<p>".format(frappe.db.get_value("User", sales_order.owner, "full_name"))
+	message+="<p>Thank you for your purchase!</p>"
+	message+="<p>We’re excited to let you know that your course are now available. You can start learning right away by clicking the link below:</p>"
+	message+="<p>👉 <a href='https://businesscatalysts.frappe.cloud/lms/courses'>Click Here to Access Your Course</a></p>"
+	message+="<p>If you have any questions or need help accessing the course, feel free to reply to this email. We're always happy to help.<p>"
+	message += "<p>Happy learning!</p>"
+	frappe.sendmail(recipients=[sales_order.owner], content=message, subject="Business Catalyst service")
+		
