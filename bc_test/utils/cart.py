@@ -65,7 +65,9 @@ def place_order():
 	sales_order.insert()
 	sales_order.submit()
 	if coupon_code:
-		create_enrollement_for_all_cource(sales_order)
+		frappe.enqueue(
+				create_enrollement_for_all_cource, sales_order=sales_order, queue="short"
+			)
 
 	if hasattr(frappe.local, "cookie_manager"):
 		frappe.local.cookie_manager.delete_cookie("cart_count")
