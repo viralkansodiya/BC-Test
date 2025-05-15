@@ -65,8 +65,9 @@ def place_order():
 	sales_order.insert()
 	sales_order.submit()
 	if coupon_code:
+		original_user = frappe.session.user
 		frappe.enqueue(
-				create_enrollement_for_all_cource, sales_order=sales_order, queue="short"
+				create_enrollement_for_all_cource, sales_order=sales_order, queue="short", original_user= original_user
 			)
 
 	if hasattr(frappe.local, "cookie_manager"):
@@ -78,9 +79,8 @@ def place_order():
 
 
 @frappe.whitelist(allow_guest=True)
-def create_enrollement_for_all_cource(sales_order):
+def create_enrollement_for_all_cource(sales_order, original_user):
 	# Save original user
-	original_user = frappe.session.user
 	
 	try:
 		# Temporarily switch to Administrator to ignore permission checks
@@ -94,14 +94,14 @@ def create_enrollement_for_all_cource(sales_order):
 
 		for course in course_list:
 			# Check if Enrollment exists
-			if not frappe.db.exists("LMS Enrollment", {"member": sales_order.owner, "course": course}):
+			if not frappe.db.exists("LMS Enrollment", {"member": original_user, "course": course}):
 				new_enroll = frappe.new_doc("LMS Enrollment")
 				new_enroll.member = sales_order.owner
 				new_enroll.course = course
 				new_enroll.insert(ignore_permissions=True)
 
 		# Send email
-		full_name = frappe.db.get_value("User", sales_order.owner, "full_name") or "Learner"
+		full_name = frappe.db.get_value("User", original_user, "full_name") or "Learner"
 		subject = "Your Course is Ready – Access Your Learning Now!"
 		message = f"""
 			<p>Hi {full_name},</p>
@@ -111,7 +111,7 @@ def create_enrollement_for_all_cource(sales_order):
 			<p>If you have any questions or need help accessing the course, feel free to reply to this email. We're always happy to help.</p>
 			<p>Happy learning!</p>
 		"""
-		frappe.sendmail(recipients=[sales_order.owner], content=message, subject=subject)
+		frappe.sendmail(recipients=[original_user], content=message, subject=subject)
 
 	finally:
 		# Always reset user context back
