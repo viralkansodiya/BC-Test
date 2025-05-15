@@ -96,7 +96,7 @@ def create_enrollement_for_all_cource(sales_order, original_user):
 			# Check if Enrollment exists
 			if not frappe.db.exists("LMS Enrollment", {"member": original_user, "course": course}):
 				new_enroll = frappe.new_doc("LMS Enrollment")
-				new_enroll.member = sales_order.owner
+				new_enroll.member = original_user
 				new_enroll.course = course
 				new_enroll.insert(ignore_permissions=True)
 
