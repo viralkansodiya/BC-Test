@@ -99,6 +99,9 @@ def create_enrollement_for_all_cource(sales_order, original_user):
 				new_enroll.member = original_user
 				new_enroll.course = course
 				new_enroll.insert(ignore_permissions=True)
+		user_doc = frappe.get_doc("User", original_user)
+		user_doc.add_roles("LMS Student")
+		
 
 		# Send email
 		full_name = frappe.db.get_value("User", original_user, "full_name") or "Learner"
