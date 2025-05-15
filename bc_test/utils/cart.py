@@ -78,6 +78,7 @@ def place_order():
 
 
 def create_enrollement_for_all_cource(sales_order):
+	frappe.db.set_user("Administrator")
 	course_list = frappe.db.get_list("LMS Course", pluck="name")
 	for row in course_list:
 		if not frappe.db.exists("LMS Enrollment", {"member":sales_order.owner, "course" : row}):
@@ -94,4 +95,5 @@ def create_enrollement_for_all_cource(sales_order):
 	message+="<p>If you have any questions or need help accessing the course, feel free to reply to this email. We're always happy to help.<p>"
 	message += "<p>Happy learning!</p>"
 	frappe.sendmail(recipients=[sales_order.owner], content=message, subject="Business Catalyst service")
+	frappe.db.set_user("Guest")
 		
