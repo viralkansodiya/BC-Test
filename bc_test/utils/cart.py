@@ -65,7 +65,7 @@ def place_order():
 	sales_order.insert()
 	sales_order.submit()
 	if coupon_code:
-		original_user = frappe.session.user
+		original_user = sales_order.owner
 		frappe.enqueue(
 				create_enrollement_for_all_cource, sales_order=sales_order, queue="short", original_user= original_user
 			)
