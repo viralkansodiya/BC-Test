@@ -84,7 +84,7 @@ def create_enrollement_for_all_cource(sales_order):
 	
 	try:
 		# Temporarily switch to Administrator to ignore permission checks
-		frappe.db.set_user("Administrator")
+		frappe.set_user("Administrator")
 		
 		# Fetch the Sales Order doc
 		sales_order = frappe.get_doc("Sales Order", sales_order)
@@ -115,6 +115,6 @@ def create_enrollement_for_all_cource(sales_order):
 
 	finally:
 		# Always reset user context back
-		frappe.db.set_user(original_user)
+		frappe.set_user(original_user)
 
 		
