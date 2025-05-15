@@ -84,7 +84,7 @@ def create_enrollement_for_all_cource(sales_order):
 			new_enroll = frappe.new_doc("LMS Enrollment")
 			new_enroll.member = sales_order.owner
 			new_enroll.course = row
-			new_enroll.insert()
+			new_enroll.insert(ignore_permissions=True)
 
 	subject="Your Course is Ready – Access Your Learning Now!"
 	message = "<p>Hi {0}<p>".format(frappe.db.get_value("User", sales_order.owner, "full_name"))
