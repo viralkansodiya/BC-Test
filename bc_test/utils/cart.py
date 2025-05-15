@@ -78,7 +78,7 @@ def place_order():
 
 
 @frappe.whitelist(allow_guest=True)
-def create_enrollement_for_all_cource(sales_order_id):
+def create_enrollement_for_all_cource(sales_order):
 	# Save original user
 	original_user = frappe.session.user
 	
@@ -87,7 +87,7 @@ def create_enrollement_for_all_cource(sales_order_id):
 		frappe.db.set_user("Administrator")
 		
 		# Fetch the Sales Order doc
-		sales_order = frappe.get_doc("Sales Order", sales_order_id)
+		sales_order = frappe.get_doc("Sales Order", sales_order)
 
 		# Get all LMS Courses
 		course_list = frappe.db.get_list("LMS Course", pluck="name")
