@@ -90,7 +90,7 @@ def create_enrollement_for_all_cource(sales_order, original_user):
 		sales_order = frappe.get_doc("Sales Order", sales_order)
 
 		# Get all LMS Courses
-		course_list = frappe.db.get_list("LMS Course",{"published":1} pluck="name")
+		course_list = frappe.db.get_list("LMS Course",{"published":1}, pluck="name")
 
 		for course in course_list:
 			# Check if Enrollment exists
