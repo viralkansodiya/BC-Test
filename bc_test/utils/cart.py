@@ -78,7 +78,7 @@ def place_order():
 
 
 def create_enrollement_for_all_cource(sales_order):
-	course_list = frappe.db.get_list("LMS Course", pluck="name")
+	course_list = frappe.db.get_list("LMS Course", {"published" : 1}, pluck="name")
 	for row in course_list:
 		if not frappe.db.exists("LMS Enrollment", {"member":sales_order.owner, "course" : row}):
 			new_enroll = frappe.new_doc("LMS Enrollment")
